@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom"
+import { Link, useParams, useSearchParams } from "react-router-dom"
 import { useEffect, useState } from "react";
 import axios from "axios";
 import CountryName from "../components/CountryName";
@@ -9,9 +9,9 @@ function CountryDetails({ baseURL }) {
     const [country, setCountry] = useState()
 
     //Fetching data from API only ONCE 
-    useEffect(() =>
+    useEffect(() => {
         //Cannot use async directly with useEffect, so need to put it inside the callback
-        async () => {
+        const fetchData = async () => {
             try {
                 //Destructuring data from response
                 const { data } = await axios.get(`${baseURL}/${params.countryId}`)
@@ -20,7 +20,11 @@ function CountryDetails({ baseURL }) {
             } catch (error) {
                 console.error(error)
             }
-        }, [params])
+        }
+
+        //Call the function to fetch the data
+        fetchData()
+    }, [params])
 
     return (
         <div className="container">
