@@ -1,6 +1,7 @@
 import { Link, useParams } from "react-router-dom"
 import { useEffect, useState } from "react";
 import axios from "axios";
+import CountryName from "../components/CountryName";
 
 function CountryDetails({ baseURL }) {
     const params = useParams()
@@ -15,7 +16,6 @@ function CountryDetails({ baseURL }) {
                 //Destructuring data from response
                 const { data } = await axios.get(`${baseURL}/${params.countryId}`)
                 //Set data to countries
-                console.log("my data is", data)
                 setCountry(data)
             } catch (error) {
                 console.error(error)
@@ -47,7 +47,7 @@ function CountryDetails({ baseURL }) {
                                 <td>
                                     <ul>
                                         {country.borders.map((border) =>
-                                            <li key={border} ><Link to={`/${border}`}>{border}</Link></li>
+                                            <li key={border} ><Link to={`/${border}`}><CountryName baseURL={baseURL} alpha3Code={border} /></Link></li>
                                         )}
                                     </ul>
                                 </td>
